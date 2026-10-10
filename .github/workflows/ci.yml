@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  checks:
+  quality:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,8 +13,16 @@ jobs:
         with:
           channel: stable
           cache: true
-      - name: Préparer le fichier d'environnement
+      - name: Preparer le fichier d'environnement
         run: cp .env.example .env
       - run: flutter pub get
-      - run: flutter analyze
-      - run: flutter test
+      - name: Verifier le formatage
+        run: dart format --output=none --set-exit-if-changed .
+      - name: Analyse statique
+        run: flutter analyze
+      - name: Tests et couverture
+        run: flutter test --coverage
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/lcov.info

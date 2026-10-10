@@ -15,7 +15,8 @@ class MediaTile extends StatelessWidget {
     final year = date.length >= 4 ? date.substring(0, 4) : null;
     final details = [
       if (year != null) year,
-      if (item.voteAverage > 0) 'Note ${item.voteAverage.toStringAsFixed(1)}/10',
+      if (item.voteAverage > 0)
+        'Note ${item.voteAverage.toStringAsFixed(1)}/10',
     ].join(' - ');
 
     return Card(
