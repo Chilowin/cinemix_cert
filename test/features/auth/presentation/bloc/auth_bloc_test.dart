@@ -73,7 +73,8 @@ void main() {
           bloc.add(const LoginRequested(email: email, password: password)),
       expect: () => [
         const AuthState(isSubmitting: true),
-        const AuthState(errorMessage: 'Email ou mot de passe incorrect.'),
+        const AuthState(
+            failure: AuthFailure('Email ou mot de passe incorrect.')),
       ],
     );
 
@@ -90,7 +91,8 @@ void main() {
           bloc.add(const RegisterRequested(email: email, password: password)),
       expect: () => [
         const AuthState(isSubmitting: true),
-        const AuthState(errorMessage: 'Cette adresse email est déjà utilisée.'),
+        const AuthState(
+            failure: AuthFailure('Cette adresse email est déjà utilisée.')),
       ],
     );
 

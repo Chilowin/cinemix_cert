@@ -1,5 +1,7 @@
+import 'package:cinemix_cert/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../catalog/domain/entities/media_category.dart';
@@ -13,22 +15,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const _titles = [
-    'Films populaires',
-    'Séries populaires',
-    'Films à venir',
-  ];
-
   int _index = 0;
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+    final titles = [
+      l10n.titlePopularMovies,
+      l10n.titlePopularSeries,
+      l10n.titleUpcomingMovies,
+    ];
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titles[_index]),
+        title: Text(titles[_index]),
         actions: [
           IconButton(
-            tooltip: 'Se déconnecter',
+            tooltip: l10n.settingsTooltip,
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => context.push('/settings'),
+          ),
+          IconButton(
+            tooltip: l10n.logoutTooltip,
             icon: const Icon(Icons.logout),
             onPressed: () =>
                 context.read<AuthBloc>().add(const LogoutRequested()),
@@ -46,21 +54,21 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _index,
         onDestinationSelected: (index) => setState(() => _index = index),
-        destinations: const [
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.movie_outlined),
-            selectedIcon: Icon(Icons.movie),
-            label: 'Films',
+            icon: const Icon(Icons.movie_outlined),
+            selectedIcon: const Icon(Icons.movie),
+            label: l10n.tabMovies,
           ),
           NavigationDestination(
-            icon: Icon(Icons.tv_outlined),
-            selectedIcon: Icon(Icons.tv),
-            label: 'Séries',
+            icon: const Icon(Icons.tv_outlined),
+            selectedIcon: const Icon(Icons.tv),
+            label: l10n.tabSeries,
           ),
           NavigationDestination(
-            icon: Icon(Icons.event_outlined),
-            selectedIcon: Icon(Icons.event),
-            label: 'À venir',
+            icon: const Icon(Icons.event_outlined),
+            selectedIcon: const Icon(Icons.event),
+            label: l10n.tabUpcoming,
           ),
         ],
       ),

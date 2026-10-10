@@ -70,7 +70,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         AuthState(
           status: state.status,
           user: state.user,
-          errorMessage: failure.message,
+          failure: failure,
         ),
       );
     }

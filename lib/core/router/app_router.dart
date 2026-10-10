@@ -5,6 +5,7 @@ import '../../features/auth/presentation/bloc/auth_bloc.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
 import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/home/presentation/pages/home_page.dart';
+import '../../features/settings/presentation/pages/settings_page.dart';
 import 'go_router_refresh_stream.dart';
 
 GoRouter createRouter(AuthBloc authBloc) {
@@ -36,6 +37,10 @@ GoRouter createRouter(AuthBloc authBloc) {
       GoRoute(
         path: '/register',
         builder: (context, state) => const RegisterPage(),
+      ),
+      GoRoute(
+        path: '/settings',
+        builder: (context, state) => const SettingsPage(),
       ),
     ],
   );

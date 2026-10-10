@@ -23,7 +23,7 @@ class CatalogCubit extends Cubit<CatalogState> {
           status: CatalogStatus.success,
           items: result.items,
           isFromCache: result.isFromCache,
-          message: result.failure?.message,
+          failure: result.failure,
         ),
       );
     } on Failure catch (failure) {
@@ -31,7 +31,7 @@ class CatalogCubit extends Cubit<CatalogState> {
         CatalogState(
           status: CatalogStatus.failure,
           items: state.items,
-          message: failure.message,
+          failure: failure,
         ),
       );
     } catch (_) {
@@ -39,7 +39,7 @@ class CatalogCubit extends Cubit<CatalogState> {
         CatalogState(
           status: CatalogStatus.failure,
           items: state.items,
-          message: const UnknownFailure().message,
+          failure: const UnknownFailure(),
         ),
       );
     }

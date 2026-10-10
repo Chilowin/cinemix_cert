@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cinemix_cert/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/media_item.dart';
@@ -11,12 +12,13 @@ class MediaTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context);
     final date = item.releaseDate ?? '';
     final year = date.length >= 4 ? date.substring(0, 4) : null;
     final details = [
       if (year != null) year,
       if (item.voteAverage > 0)
-        'Note ${item.voteAverage.toStringAsFixed(1)}/10',
+        l10n.ratingLabel(item.voteAverage.toStringAsFixed(1)),
     ].join(' - ');
 
     return Card(
@@ -44,9 +46,7 @@ class MediaTile extends StatelessWidget {
                   ],
                   const SizedBox(height: 8),
                   Text(
-                    item.overview.isEmpty
-                        ? 'Aucun résumé disponible.'
-                        : item.overview,
+                    item.overview.isEmpty ? l10n.noOverview : item.overview,
                     style: theme.textTheme.bodyMedium,
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,

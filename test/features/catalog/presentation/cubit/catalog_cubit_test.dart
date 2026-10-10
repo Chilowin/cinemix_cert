@@ -56,7 +56,7 @@ void main() {
           status: CatalogStatus.success,
           items: items,
           isFromCache: true,
-          message: 'Aucune connexion réseau.',
+          failure: NetworkFailure(),
         ),
       ],
     );
@@ -74,7 +74,7 @@ void main() {
         const CatalogState(),
         const CatalogState(
           status: CatalogStatus.failure,
-          message: 'Erreur serveur (code 500).',
+          failure: ServerFailure('Erreur serveur (code 500).'),
         ),
       ],
     );
@@ -95,7 +95,7 @@ void main() {
         const CatalogState(
           status: CatalogStatus.failure,
           items: items,
-          message: 'Aucune connexion réseau.',
+          failure: NetworkFailure(),
         ),
       ],
     );
@@ -112,7 +112,7 @@ void main() {
         const CatalogState(),
         const CatalogState(
           status: CatalogStatus.failure,
-          message: 'Une erreur inattendue est survenue.',
+          failure: UnknownFailure(),
         ),
       ],
     );

@@ -1,7 +1,9 @@
+import 'package:cinemix_cert/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/ui/app_snackbar.dart';
+import '../../../../core/ui/failure_text.dart';
 import '../../domain/entities/media_category.dart';
 import '../../domain/repositories/catalog_repository.dart';
 import '../cubit/catalog_cubit.dart';
@@ -31,15 +33,18 @@ class _CatalogView extends StatelessWidget {
       listenWhen: (previous, current) =>
           previous.status != current.status &&
           current.status != CatalogStatus.loading &&
-          current.message != null,
+          current.failure != null,
       listener: (context, state) {
-        final message = state.isFromCache
-            ? '${state.message} Affichage des données enregistrées.'
-            : state.message!;
-        showErrorSnackBar(context, message);
+        final l10n = AppLocalizations.of(context);
+        final text = state.failure!.localized(l10n);
+        showErrorSnackBar(
+          context,
+          state.isFromCache ? l10n.cachedDataNotice(text) : text,
+        );
       },
       builder: (context, state) {
         final cubit = context.read<CatalogCubit>();
+        final l10n = AppLocalizations.of(context);
 
         if (state.items.isEmpty) {
           if (state.status == CatalogStatus.loading) {
@@ -47,7 +52,7 @@ class _CatalogView extends StatelessWidget {
           }
           if (state.status == CatalogStatus.failure) {
             return _ErrorView(
-              message: state.message ?? 'Une erreur est survenue.',
+              message: state.failure?.localized(l10n) ?? l10n.errorUnknown,
               onRetry: cubit.load,
             );
           }
@@ -62,9 +67,9 @@ class _CatalogView extends StatelessWidget {
                 child: state.items.isEmpty
                     ? ListView(
                         physics: const AlwaysScrollableScrollPhysics(),
-                        children: const [
-                          SizedBox(height: 120),
-                          Center(child: Text('Aucun contenu à afficher.')),
+                        children: [
+                          const SizedBox(height: 120),
+                          Center(child: Text(l10n.emptyList)),
                         ],
                       )
                     : ListView.builder(
@@ -94,7 +99,7 @@ class _OfflineBanner extends StatelessWidget {
       color: colors.secondaryContainer,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Text(
-        'Données enregistrées : actualisation impossible pour le moment.',
+        AppLocalizations.of(context).offlineBanner,
         style: TextStyle(color: colors.onSecondaryContainer),
       ),
     );
@@ -119,7 +124,10 @@ class _ErrorView extends StatelessWidget {
             const SizedBox(height: 16),
             Text(message, textAlign: TextAlign.center),
             const SizedBox(height: 16),
-            FilledButton(onPressed: onRetry, child: const Text('Réessayer')),
+            FilledButton(
+              onPressed: onRetry,
+              child: Text(AppLocalizations.of(context).retryButton),
+            ),
           ],
         ),
       ),

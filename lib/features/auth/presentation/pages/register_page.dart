@@ -1,8 +1,10 @@
+import 'package:cinemix_cert/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/ui/app_snackbar.dart';
+import '../../../../core/ui/failure_text.dart';
 import '../bloc/auth_bloc.dart';
 import '../validators.dart';
 
@@ -39,12 +41,15 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context);
+
     return BlocListener<AuthBloc, AuthState>(
       listenWhen: (previous, current) =>
-          current.errorMessage != null &&
-          previous.errorMessage != current.errorMessage,
-      listener: (context, state) =>
-          showErrorSnackBar(context, state.errorMessage!),
+          current.failure != null && previous.failure != current.failure,
+      listener: (context, state) => showErrorSnackBar(
+        context,
+        state.failure!.localized(AppLocalizations.of(context)),
+      ),
       child: Scaffold(
         body: SafeArea(
           child: Center(
@@ -59,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        'Créer un compte',
+                        l10n.registerTitle,
                         style: Theme.of(context).textTheme.headlineMedium,
                         textAlign: TextAlign.center,
                       ),
@@ -68,22 +73,22 @@ class _RegisterPageState extends State<RegisterPage> {
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                          labelText: 'Adresse email',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: l10n.emailLabel,
+                          border: const OutlineInputBorder(),
                         ),
-                        validator: validateEmail,
+                        validator: (value) => validateEmail(value, l10n),
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
                         controller: _passwordController,
                         obscureText: true,
                         textInputAction: TextInputAction.next,
-                        decoration: const InputDecoration(
-                          labelText: 'Mot de passe',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: l10n.passwordLabel,
+                          border: const OutlineInputBorder(),
                         ),
-                        validator: validatePassword,
+                        validator: (value) => validatePassword(value, l10n),
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
@@ -91,13 +96,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         obscureText: true,
                         textInputAction: TextInputAction.done,
                         onFieldSubmitted: (_) => _submit(),
-                        decoration: const InputDecoration(
-                          labelText: 'Confirmer le mot de passe',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: l10n.confirmPasswordLabel,
+                          border: const OutlineInputBorder(),
                         ),
                         validator: (value) {
                           if (value != _passwordController.text) {
-                            return 'Les mots de passe ne correspondent pas.';
+                            return l10n.validationPasswordMismatch;
                           }
                           return null;
                         },
@@ -117,14 +122,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                       strokeWidth: 2,
                                     ),
                                   )
-                                : const Text('S\'inscrire'),
+                                : Text(l10n.signUpButton),
                           );
                         },
                       ),
                       const SizedBox(height: 12),
                       TextButton(
                         onPressed: () => context.go('/login'),
-                        child: const Text('J\'ai déjà un compte'),
+                        child: Text(l10n.alreadyHaveAccountLink),
                       ),
                     ],
                   ),

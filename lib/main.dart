@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -13,8 +14,8 @@ import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/catalog/data/datasources/catalog_local_data_source.dart';
 import 'features/catalog/data/datasources/catalog_remote_data_source.dart';
 import 'features/catalog/data/repositories/catalog_repository_impl.dart';
+import 'features/settings/presentation/cubit/locale_cubit.dart';
 import 'firebase_options.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,7 @@ Future<void> main() async {
     App(
       authBloc: authBloc,
       catalogRepository: catalogRepository,
+      localeCubit: LocaleCubit(cache),
       router: createRouter(authBloc),
     ),
   );

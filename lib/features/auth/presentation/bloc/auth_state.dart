@@ -7,14 +7,14 @@ class AuthState extends Equatable {
     this.status = AuthStatus.unknown,
     this.user,
     this.isSubmitting = false,
-    this.errorMessage,
+    this.failure,
   });
 
   final AuthStatus status;
   final AppUser? user;
   final bool isSubmitting;
-  final String? errorMessage;
+  final Failure? failure;
 
   @override
-  List<Object?> get props => [status, user, isSubmitting, errorMessage];
+  List<Object?> get props => [status, user, isSubmitting, failure];
 }
