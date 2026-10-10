@@ -27,6 +27,7 @@ Future<void> main() async {
     tokenProvider: FirebaseTokenProvider(auth),
     apiKey: dotenv.get('TMDB_API_KEY'),
     attachToken: !kIsWeb,
+    onSessionExpired: auth.signOut,
   );
 
   final authBloc = AuthBloc(AuthRepositoryImpl(auth));

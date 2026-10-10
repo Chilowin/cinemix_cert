@@ -5,20 +5,35 @@ import 'token_provider.dart';
 const String tmdbBaseUrl = 'https://api.themoviedb.org/3';
 const String tokenHeader = 'X-Firebase-Token';
 
+typedef SessionExpiredCallback = Future<void> Function();
+
 class AuthInterceptor extends Interceptor {
-  AuthInterceptor({required this.tokenProvider, required this.dio});
+  AuthInterceptor({
+    required this.tokenProvider,
+    required this.dio,
+    this.onSessionExpired,
+  });
 
   final TokenProvider tokenProvider;
   final Dio dio;
+  final SessionExpiredCallback? onSessionExpired;
 
   static const String _retryKey = 'auth_retried';
+
+  Future<String?> _readToken({bool forceRefresh = false}) async {
+    try {
+      return await tokenProvider.getToken(forceRefresh: forceRefresh);
+    } catch (_) {
+      return null;
+    }
+  }
 
   @override
   Future<void> onRequest(
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final token = await tokenProvider.getToken();
+    final token = await _readToken();
     if (token != null) {
       options.headers[tokenHeader] = token;
     }
@@ -38,8 +53,9 @@ class AuthInterceptor extends Interceptor {
       return;
     }
 
-    final token = await tokenProvider.getToken(forceRefresh: true);
+    final token = await _readToken(forceRefresh: true);
     if (token == null) {
+      await onSessionExpired?.call();
       handler.next(err);
       return;
     }
@@ -56,6 +72,31 @@ class AuthInterceptor extends Interceptor {
   }
 }
 
+Dio createDio({
+  required TokenProvider tokenProvider,
+  required String apiKey,
+  bool attachToken = true,
+  SessionExpiredCallback? onSessionExpired,
+}) {
+  final dio = Dio(
+    BaseOptions(
+      baseUrl: tmdbBaseUrl,
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 15),
+      queryParameters: {'api_key': apiKey, 'language': 'fr-FR'},
+    ),
+  );
+  if (attachToken) {
+    dio.interceptors.add(
+      AuthInterceptor(
+        tokenProvider: tokenProvider,
+        dio: dio,
+        onSessionExpired: onSessionExpired,
+      ),
+    );
+  }
+  return dio;
+}
 /*
 Dio createDio({
   required TokenProvider tokenProvider,
@@ -72,23 +113,4 @@ Dio createDio({
   dio.interceptors.add(AuthInterceptor(tokenProvider: tokenProvider, dio: dio));
   return dio;
 }*/
-Dio createDio({
-  required TokenProvider tokenProvider,
-  required String apiKey,
-  bool attachToken = true,
-}) {
-  final dio = Dio(
-    BaseOptions(
-      baseUrl: tmdbBaseUrl,
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 15),
-      queryParameters: {'api_key': apiKey, 'language': 'fr-FR'},
-    ),
-  );
-  if (attachToken) {
-    dio.interceptors.add(
-      AuthInterceptor(tokenProvider: tokenProvider, dio: dio),
-    );
-  }
-  return dio;
-}
+D
