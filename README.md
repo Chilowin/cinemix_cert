@@ -1,4 +1,5 @@
 # Cinemix
+![CI](https://github.com/Chilowin/cinemix_cert/actions/workflows/ci.yml/badge.svg)
 
 Application Flutter qui affiche des films et des séries à partir de l'API TMDB. L'utilisateur crée un compte ou se connecte (Firebase Authentication), puis consulte trois listes : films populaires, séries populaires et films à venir. Les données sont gardées en cache avec Hive, ce qui permet de les consulter sans connexion.
 
