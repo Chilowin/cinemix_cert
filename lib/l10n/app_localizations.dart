@@ -379,6 +379,42 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'English'**
   String get languageEnglish;
+
+  /// No description provided for @tabFavorites.
+  ///
+  /// In fr, this message translates to:
+  /// **'Favoris'**
+  String get tabFavorites;
+
+  /// No description provided for @titleFavorites.
+  ///
+  /// In fr, this message translates to:
+  /// **'Favoris'**
+  String get titleFavorites;
+
+  /// No description provided for @emptyFavorites.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun favori pour le moment. Touchez le cœur d\'un titre pour l\'ajouter.'**
+  String get emptyFavorites;
+
+  /// No description provided for @addFavoriteTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter aux favoris'**
+  String get addFavoriteTooltip;
+
+  /// No description provided for @removeFavoriteTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retirer des favoris'**
+  String get removeFavoriteTooltip;
+
+  /// No description provided for @overviewLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Résumé'**
+  String get overviewLabel;
 }
 
 class _AppLocalizationsDelegate

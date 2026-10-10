@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cinemix_cert/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/media_item.dart';
+import 'media_formatting.dart';
 
 class MediaTile extends StatelessWidget {
   const MediaTile({super.key, required this.item});
@@ -13,49 +15,46 @@ class MediaTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context);
-    final date = item.releaseDate ?? '';
-    final year = date.length >= 4 ? date.substring(0, 4) : null;
-    final details = [
-      if (year != null) year,
-      if (item.voteAverage > 0)
-        l10n.ratingLabel(item.voteAverage.toStringAsFixed(1)),
-    ].join(' - ');
+    final details = mediaSubtitle(item, l10n);
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       clipBehavior: Clip.antiAlias,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _Poster(url: item.posterUrl),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.title,
-                    style: theme.textTheme.titleMedium,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  if (details.isNotEmpty) ...[
-                    const SizedBox(height: 4),
-                    Text(details, style: theme.textTheme.bodySmall),
+      child: InkWell(
+        onTap: () => context.push('/detail', extra: item),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _Poster(url: item.posterUrl),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      style: theme.textTheme.titleMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (details.isNotEmpty) ...[
+                      const SizedBox(height: 4),
+                      Text(details, style: theme.textTheme.bodySmall),
+                    ],
+                    const SizedBox(height: 8),
+                    Text(
+                      item.overview.isEmpty ? l10n.noOverview : item.overview,
+                      style: theme.textTheme.bodyMedium,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ],
-                  const SizedBox(height: 8),
-                  Text(
-                    item.overview.isEmpty ? l10n.noOverview : item.overview,
-                    style: theme.textTheme.bodyMedium,
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

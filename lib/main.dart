@@ -14,6 +14,8 @@ import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/catalog/data/datasources/catalog_local_data_source.dart';
 import 'features/catalog/data/datasources/catalog_remote_data_source.dart';
 import 'features/catalog/data/repositories/catalog_repository_impl.dart';
+import 'features/favorites/data/repositories/favorites_repository_impl.dart';
+import 'features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'features/settings/presentation/cubit/locale_cubit.dart';
 import 'firebase_options.dart';
 
@@ -36,11 +38,13 @@ Future<void> main() async {
     remote: CatalogRemoteDataSource(dio),
     local: CatalogLocalDataSource(cache),
   );
+  final favoritesCubit = FavoritesCubit(FavoritesRepositoryImpl(cache))..load();
 
   runApp(
     App(
       authBloc: authBloc,
       catalogRepository: catalogRepository,
+      favoritesCubit: favoritesCubit,
       localeCubit: LocaleCubit(cache),
       router: createRouter(authBloc),
     ),

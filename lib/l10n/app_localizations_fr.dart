@@ -157,4 +157,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get languageEnglish => 'English';
+
+  @override
+  String get tabFavorites => 'Favoris';
+
+  @override
+  String get titleFavorites => 'Favoris';
+
+  @override
+  String get emptyFavorites =>
+      'Aucun favori pour le moment. Touchez le cœur d\'un titre pour l\'ajouter.';
+
+  @override
+  String get addFavoriteTooltip => 'Ajouter aux favoris';
+
+  @override
+  String get removeFavoriteTooltip => 'Retirer des favoris';
+
+  @override
+  String get overviewLabel => 'Résumé';
 }

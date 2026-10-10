@@ -46,5 +46,11 @@
   "languageLabel": "Language",
   "languageSystem": "System language",
   "languageFrench": "Français",
-  "languageEnglish": "English"
+  "languageEnglish": "English",
+  "tabFavorites": "Favorites",
+  "titleFavorites": "Favorites",
+  "emptyFavorites": "No favorites yet. Tap the heart on a title to add it.",
+  "addFavoriteTooltip": "Add to favorites",
+  "removeFavoriteTooltip": "Remove from favorites",
+  "overviewLabel": "Overview"
 }

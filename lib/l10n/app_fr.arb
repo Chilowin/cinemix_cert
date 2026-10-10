@@ -28,14 +28,18 @@
   "ratingLabel": "Note {rating}/10",
   "@ratingLabel": {
     "placeholders": {
-      "rating": { "type": "String" }
+      "rating": {
+        "type": "String"
+      }
     }
   },
   "offlineBanner": "Données enregistrées : actualisation impossible pour le moment.",
   "cachedDataNotice": "{message} Affichage des données enregistrées.",
   "@cachedDataNotice": {
     "placeholders": {
-      "message": { "type": "String" }
+      "message": {
+        "type": "String"
+      }
     }
   },
   "retryButton": "Réessayer",
@@ -44,7 +48,9 @@
   "errorServer": "Erreur serveur (code {code}).",
   "@errorServer": {
     "placeholders": {
-      "code": { "type": "int" }
+      "code": {
+        "type": "int"
+      }
     }
   },
   "errorNotFound": "Ressource introuvable.",
@@ -61,5 +67,11 @@
   "languageLabel": "Langue",
   "languageSystem": "Langue du système",
   "languageFrench": "Français",
-  "languageEnglish": "English"
+  "languageEnglish": "English",
+  "tabFavorites": "Favoris",
+  "titleFavorites": "Favoris",
+  "emptyFavorites": "Aucun favori pour le moment. Touchez le cœur d'un titre pour l'ajouter.",
+  "addFavoriteTooltip": "Ajouter aux favoris",
+  "removeFavoriteTooltip": "Retirer des favoris",
+  "overviewLabel": "Résumé"
 }

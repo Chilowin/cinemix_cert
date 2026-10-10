@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../auth/presentation/bloc/auth_bloc.dart';
 import '../../../catalog/domain/entities/media_category.dart';
 import '../../../catalog/presentation/pages/catalog_page.dart';
+import '../../../favorites/presentation/pages/favorites_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,6 +25,7 @@ class _HomePageState extends State<HomePage> {
       l10n.titlePopularMovies,
       l10n.titlePopularSeries,
       l10n.titleUpcomingMovies,
+      l10n.titleFavorites,
     ];
 
     return Scaffold(
@@ -49,6 +51,7 @@ class _HomePageState extends State<HomePage> {
           CatalogPage(category: MediaCategory.popularMovies),
           CatalogPage(category: MediaCategory.popularSeries),
           CatalogPage(category: MediaCategory.upcomingMovies),
+          FavoritesPage(),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -69,6 +72,11 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.event_outlined),
             selectedIcon: const Icon(Icons.event),
             label: l10n.tabUpcoming,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.favorite_border),
+            selectedIcon: const Icon(Icons.favorite),
+            label: l10n.tabFavorites,
           ),
         ],
       ),

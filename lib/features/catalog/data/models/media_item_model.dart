@@ -10,6 +10,17 @@ class MediaItemModel extends MediaItem {
     super.voteAverage,
   });
 
+  factory MediaItemModel.fromEntity(MediaItem item) {
+    return MediaItemModel(
+      id: item.id,
+      title: item.title,
+      overview: item.overview,
+      posterPath: item.posterPath,
+      releaseDate: item.releaseDate,
+      voteAverage: item.voteAverage,
+    );
+  }
+
   factory MediaItemModel.fromJson(Map<String, dynamic> json) {
     return MediaItemModel(
       id: json['id'] as int,

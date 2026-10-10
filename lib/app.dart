@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/catalog/domain/repositories/catalog_repository.dart';
+import 'features/favorites/presentation/cubit/favorites_cubit.dart';
 import 'features/settings/presentation/cubit/locale_cubit.dart';
 
 class App extends StatelessWidget {
@@ -13,12 +14,14 @@ class App extends StatelessWidget {
     super.key,
     required this.authBloc,
     required this.catalogRepository,
+    required this.favoritesCubit,
     required this.localeCubit,
     required this.router,
   });
 
   final AuthBloc authBloc;
   final CatalogRepository catalogRepository;
+  final FavoritesCubit favoritesCubit;
   final LocaleCubit localeCubit;
   final GoRouter router;
 
@@ -29,6 +32,7 @@ class App extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider.value(value: authBloc),
+          BlocProvider.value(value: favoritesCubit),
           BlocProvider.value(value: localeCubit),
         ],
         child: BlocBuilder<LocaleCubit, Locale?>(
