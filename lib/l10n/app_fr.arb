@@ -1,0 +1,65 @@
+{
+  "@@locale": "fr",
+  "appTitle": "Cinemix",
+  "loginTitle": "Connexion",
+  "registerTitle": "Créer un compte",
+  "emailLabel": "Adresse email",
+  "passwordLabel": "Mot de passe",
+  "confirmPasswordLabel": "Confirmer le mot de passe",
+  "signInButton": "Se connecter",
+  "signUpButton": "S'inscrire",
+  "createAccountLink": "Créer un compte",
+  "alreadyHaveAccountLink": "J'ai déjà un compte",
+  "logoutTooltip": "Se déconnecter",
+  "settingsTooltip": "Paramètres",
+  "validationEmailRequired": "Saisissez votre adresse email.",
+  "validationEmailInvalid": "Adresse email invalide.",
+  "validationPasswordRequired": "Saisissez votre mot de passe.",
+  "validationPasswordTooShort": "Au moins 6 caractères.",
+  "validationPasswordMismatch": "Les mots de passe ne correspondent pas.",
+  "titlePopularMovies": "Films populaires",
+  "titlePopularSeries": "Séries populaires",
+  "titleUpcomingMovies": "Films à venir",
+  "tabMovies": "Films",
+  "tabSeries": "Séries",
+  "tabUpcoming": "À venir",
+  "emptyList": "Aucun contenu à afficher.",
+  "noOverview": "Aucun résumé disponible.",
+  "ratingLabel": "Note {rating}/10",
+  "@ratingLabel": {
+    "placeholders": {
+      "rating": { "type": "String" }
+    }
+  },
+  "offlineBanner": "Données enregistrées : actualisation impossible pour le moment.",
+  "cachedDataNotice": "{message} Affichage des données enregistrées.",
+  "@cachedDataNotice": {
+    "placeholders": {
+      "message": { "type": "String" }
+    }
+  },
+  "retryButton": "Réessayer",
+  "errorNoConnection": "Aucune connexion réseau.",
+  "errorTimeout": "Le délai de connexion a été dépassé.",
+  "errorServer": "Erreur serveur (code {code}).",
+  "@errorServer": {
+    "placeholders": {
+      "code": { "type": "int" }
+    }
+  },
+  "errorNotFound": "Ressource introuvable.",
+  "errorSessionExpired": "Session expirée, reconnectez-vous.",
+  "errorAuthFailed": "Authentification impossible.",
+  "errorInvalidCredentials": "Email ou mot de passe incorrect.",
+  "errorInvalidEmail": "Adresse email invalide.",
+  "errorEmailInUse": "Cette adresse email est déjà utilisée.",
+  "errorWeakPassword": "Le mot de passe doit contenir au moins 6 caractères.",
+  "errorTooManyRequests": "Trop de tentatives, réessayez plus tard.",
+  "errorNoCache": "Aucune donnée disponible hors ligne.",
+  "errorUnknown": "Une erreur inattendue est survenue.",
+  "settingsTitle": "Paramètres",
+  "languageLabel": "Langue",
+  "languageSystem": "Langue du système",
+  "languageFrench": "Français",
+  "languageEnglish": "English"
+}
